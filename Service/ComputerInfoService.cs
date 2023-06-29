@@ -11,7 +11,7 @@ using OpenHardwareMonitor.Hardware;
 
 namespace Kursak.Service
 {
-    public class ComputerInfoService
+    public class ComputerInfoService: IDisposable
     {
         private ComputerInfoModel _computerInfoModel;
         Computer _computer = new Computer();
@@ -23,6 +23,7 @@ namespace Kursak.Service
             _computerInfoModel = new ComputerInfoModel();
             _computer.CPUEnabled = true;
             _computer.Open();
+            Task.Run(async()=>await GetComputerInfoAsync());
         }
 
         public List<PlotingModel> GetPlotInfo(ComputerInfoType infoType)
@@ -57,8 +58,7 @@ namespace Kursak.Service
         {
             while (true)
             {
-
-
+               
                 // Iterate through each hardware component
                 foreach (var hardware in _computer.Hardware)
                 {
@@ -174,34 +174,16 @@ namespace Kursak.Service
                         _computerInfoModel.Usage.Add(usageData);
 
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    _computerInfoModel.Clocks.Add(new ClocksModel()
-                    {
-                        AverageClocks = 1,
-                        CollectedTime = DateTime.UtcNow
-                    });
-
-                    _computerInfoModel.Powers.Add(new PowerModel()
-                    {
-                        CollectedTime = DateTime.UtcNow
-                    });
                 }
+
+                await Task.Delay(5000);
             }
 
+        }
+
+        public void Dispose()
+        {
+            _computer.Close();
         }
     }
 }

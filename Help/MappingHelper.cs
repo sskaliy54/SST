@@ -1,5 +1,6 @@
 ﻿using Kursak.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,30 +69,30 @@ namespace Kursak.Help
                 CollectedTime = usageModel.CollectedTime
             };
         }
-            public static List<PlotingModel> MapToPlotingModels(List<TemperatureModel> temperatureModels)
-            {
-                return temperatureModels.Select(MapToPlotingModel).ToList();
-            }
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<TemperatureModel> temperatureModels)
+        {
+            return temperatureModels.Select(MapToPlotingModel).ToList();
+        }
 
-            public static List<PlotingModel> MapToPlotingModels(List<ClocksModel> clocksModels)
-            {
-                return clocksModels.Select(MapToPlotingModel).ToList();
-            }
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<ClocksModel> clocksModels)
+        {
+            return clocksModels.Select(MapToPlotingModel).ToList();
+        }
 
-            public static List<PlotingModel> MapToPlotingModels(List<PowerModel> powerModels)
-            {
-                return powerModels.Select(MapToPlotingModel).ToList();
-            }
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<PowerModel> powerModels)
+        {
+            return powerModels.Select(MapToPlotingModel).ToList();
+        }
 
-            public static List<PlotingModel> MapToPlotingModels(List<CoolingsFansModel> coolingsFansModels)
-            {
-                return coolingsFansModels.Select(MapToPlotingModel).ToList();
-            }
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<CoolingsFansModel> coolingsFansModels)
+        {
+            return coolingsFansModels.Select(MapToPlotingModel).ToList();
+        }
 
-            public static List<PlotingModel> MapToPlotingModels(List<UsageModel> usageModels)
-            {
-                return usageModels.Select(MapToPlotingModel).ToList();
-            }
-        
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<UsageModel> usageModels)
+        {
+            return usageModels.Select(MapToPlotingModel).ToList();
+        }
+
     }
 }

@@ -107,7 +107,7 @@ namespace Kursak.ViewModel
             }
         }
 
-        public void AA()
+        public void PlotInfo()
         {
             // Create the PlotModel
             PlotModel = new PlotModel();
@@ -265,6 +265,7 @@ namespace Kursak.ViewModel
             Grid1Visibility = Visibility.Collapsed;
             Grid2Visibility = Visibility.Visible;
             StackPanelVisibility = Visibility.Collapsed;
+            PlotInfo();
         }
 
         private void ExecuteHomeButton()
