@@ -64,7 +64,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Vertical">
-                        <Button Style="{StaticResource RoundButtonTemplate}" Height="48" Background="Transparent"  Margin="0,20,0,0">
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="48" Background="Transparent"  Margin="0,20,0,0" Command="{Binding HomeButtonCommand}">
                             <StackPanel Orientation="Horizontal" Width="178">
                                 <Image Source="/Image/home.png" Width="30" Height="30" Margin="5"/>
                                 <TextBlock Text="HOME" 
@@ -73,7 +73,7 @@
                                    FontSize="18" Height="19" Width="51"/>
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent"  Command="{Binding GraphsButtonCommand}">
                             <StackPanel Orientation="Horizontal" Width="178">
                                 <Image Source="/Image/graf.png" Width="30" Height="30" Margin="5"/>
                                 <TextBlock Text="GRAPHS" 
@@ -100,7 +100,7 @@
                                    FontSize="18" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent" Width="201"  Click="HelpButton_Click">
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent" Width="201" Command="{Binding HelpButtonCommand}">
                             <StackPanel Orientation="Horizontal" Width="178">
                                 <Image Source="/Image/sup.png" Width="30" Height="30" Margin="5"/>
                                 <TextBlock Text="HELP" 
@@ -153,7 +153,7 @@
                         Margin="480,0,0,0" Grid.ColumnSpan="2" Click="rollup_Click"/>
                     <!--x-->
                 </Grid>
-                <Grid Grid.Row="1" >
+                <Grid Grid.Row="1" Name="Grid1" Visibility="{Binding Grid1Visibility}" >
                     <!--Visibility="{Binding IsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}"-->
                     <!--Контент-->
                     <Rectangle Fill="#F0FFFF"
@@ -306,8 +306,9 @@
                               IsChecked="{Binding Checkbox5, Mode=TwoWay}" Height="19" />
                         </StackPanel>
                     </Grid>
+                </Grid>
 
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"  Visibility="{Binding IsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Name="ScrollViewer" Visibility="{Binding StackPanelVisibility}">
                         <ScrollViewer.Resources>
                             <Style TargetType="RichTextBox">
                                 <Setter Property="Background" Value="Transparent" />
@@ -358,15 +359,8 @@
                         </RichTextBox>
                     </ScrollViewer>
 
-                    <!--графік  <oxy:PlotView Model="{Binding MyModel}" Margin="22,46,43,45"/>
--->
 
-
-
-
-                </Grid>
-
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Name="Grid2" Visibility="{Binding Grid2Visibility}">
                     <oxy:PlotView Model="{Binding PlotModel}" />
                 </Grid>
                 

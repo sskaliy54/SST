@@ -61,7 +61,7 @@ namespace Kursak.Service
 
         public void CPUStressTest()
         {
-            static void Main()
+            void Main()
             {
                 // Кількість потоків, які будуть використовуватись для стрес-тестування
                 Task.Run(() =>
@@ -96,7 +96,7 @@ namespace Kursak.Service
                 });
             }
 
-            static void StressThread()
+            void StressThread()
             {
                 while (!stopThreadsCPU)
                 {
@@ -105,7 +105,7 @@ namespace Kursak.Service
                 }
             }
 
-            static int CalculateFactorial(int n)
+            int CalculateFactorial(int n)
             {
                 int result = 1;
                 for (int i = 1; i <= n; i++)
@@ -123,7 +123,7 @@ namespace Kursak.Service
         static long totalCalculationsFPU = 0;
         public void FPUStressTest()
         {
-            static void Main()
+            void Main()
             {
                 // Кількість потоків, які будуть використовуватись для стрес-тестування
                 Task.Run(() =>
@@ -158,7 +158,7 @@ namespace Kursak.Service
                 });
             }
 
-            static void FPULoadWorker()
+            void FPULoadWorker()
             {
                 while (!stopThreadsFPU)
                 {
@@ -167,7 +167,7 @@ namespace Kursak.Service
                 }
             }
 
-            static double DoCalculations()
+            double DoCalculations()
             {
                 double result = 0;
 
@@ -197,7 +197,7 @@ namespace Kursak.Service
 
         public void CasheStressTest()
         {
-            static void Main()
+            void Main()
             {
                 Task.Run(() =>
                 {
@@ -228,7 +228,7 @@ namespace Kursak.Service
                 });
             }
 
-            static void CacheCPULoadWorker()
+            void CacheCPULoadWorker()
             {
 
                 while (!stopThreadsCashe)
@@ -239,7 +239,7 @@ namespace Kursak.Service
 
 
             }
-            static int DoCalculations()
+            int DoCalculations()
             {
                 int result = 0;
 
@@ -262,7 +262,7 @@ namespace Kursak.Service
         static volatile int totalCalculationsRAM = 0;
         public void RAMStressTest()
         {
-            static void Main()
+            void Main()
             {
                 Task.Run(() =>
                 {
@@ -287,7 +287,7 @@ namespace Kursak.Service
                     stopThreadsRAM = true;
                 });
             }
-            static int DoMemoryCalculations()
+            int DoMemoryCalculations()
             {
                 try
                 {
@@ -308,7 +308,7 @@ namespace Kursak.Service
                 }
             }
 
-            static void MemoryCPULoadWorker()
+            void MemoryCPULoadWorker()
             {
 
                 while (!stopThreadsRAM)
@@ -326,7 +326,7 @@ namespace Kursak.Service
         //Disk
         public void DiskStressTest()
         {
-            static void Main()
+            void Main()
             {
                 Task.Run(() =>
                 {

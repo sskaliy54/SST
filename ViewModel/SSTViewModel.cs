@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -89,6 +90,9 @@ namespace Kursak.ViewModel
             _stressTestService = new StressTestService();
             StartCommand = new RelayCommand(Start);
             StopCommand = new RelayCommand(Stop);
+            GraphsButtonCommand = new RelayCommand(ExecuteGraphsButton);
+            HomeButtonCommand = new RelayCommand(ExecuteHomeButton);
+            HelpButtonCommand = new RelayCommand(ExecuteHelpButton);
         }
 
         private PlotModel _plotModel;
@@ -213,6 +217,78 @@ namespace Kursak.ViewModel
             };
             return model;
         }
+
+        private Visibility _grid1Visibility = Visibility.Visible;
+        public Visibility Grid1Visibility
+        {
+            get { return _grid1Visibility; }
+            set
+            {
+                _grid1Visibility = value;
+                OnPropertyChanged(nameof(Grid1Visibility));
+            }
+        }
+
+        private Visibility _grid2Visibility = Visibility.Collapsed;
+        public Visibility Grid2Visibility
+        {
+            get { return _grid2Visibility; }
+            set
+            {
+                _grid2Visibility = value;
+                OnPropertyChanged2(nameof(Grid2Visibility));
+            }
+        }
+
+        private Visibility _stackPanelVisibility = Visibility.Collapsed;
+        public Visibility StackPanelVisibility
+        {
+            get { return _stackPanelVisibility; }
+            set
+            {
+                _stackPanelVisibility = value;
+                OnPropertyChanged2(nameof(StackPanelVisibility));
+            }
+        }
+
+        // Implement the ICommand properties for button click events
+        public ICommand GraphsButtonCommand { get; private set; }
+        public ICommand HomeButtonCommand { get; private set; }
+        public ICommand HelpButtonCommand { get; private set; }
+
+
+        
+
+        // Implement the click event methods
+        public void ExecuteGraphsButton()
+        {
+            Grid1Visibility = Visibility.Collapsed;
+            Grid2Visibility = Visibility.Visible;
+            StackPanelVisibility = Visibility.Collapsed;
+        }
+
+        private void ExecuteHomeButton()
+        {
+            Grid1Visibility = Visibility.Visible;
+            Grid2Visibility = Visibility.Collapsed;
+            StackPanelVisibility = Visibility.Collapsed;
+        }
+
+        private void ExecuteHelpButton()
+        {
+            Grid1Visibility = Visibility.Collapsed;
+            Grid2Visibility = Visibility.Collapsed;
+            StackPanelVisibility = Visibility.Visible;
+        }
+
+        // Implement the INotifyPropertyChanged interface
+        public event PropertyChangedEventHandler PropertyChanged2;
+
+        protected virtual void OnPropertyChanged2(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
     }
 

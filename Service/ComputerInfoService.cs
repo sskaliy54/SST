@@ -21,6 +21,7 @@ namespace Kursak.Service
         public ComputerInfoService()
         {
             _computerInfoModel = new ComputerInfoModel();
+            _computer.CPUEnabled = true;
             _computer.Open();
         }
 
