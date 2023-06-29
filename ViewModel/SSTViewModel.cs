@@ -13,48 +13,42 @@ namespace Kursak.ViewModel
     public class SSTViewModel : INotifyPropertyChanged
     {
         private readonly StressTestService _stressTestService;
+        private readonly ComputerInfoService _computerInfoService;
 
-        private bool CPU;
-        private bool FPU;
-        private bool Cashe;
-        private bool GPU;
-        private bool Disk;
-        private bool RAM;
-        private bool RAM2;
-        
+
         public bool Checkbox1
         {
-            get { return CPU; }
-            set { CPU = value; OnPropertyChangedCheckbox(); }
+            get { return IsCPUTestEnabled; }
+            set { IsCPUTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
 
-       public bool Checkbox2
+        public bool Checkbox2
         {
-            get { return FPU; }
-            set {FPU= value; OnPropertyChangedCheckbox(); }
+            get { return IsFPUTestEnabled; }
+            set { IsFPUTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
 
         public bool Checkbox3
         {
-            get { return Cashe; }
-            set { Cashe = value; OnPropertyChangedCheckbox(); }
+            get { return IsCasheTestEnabled; }
+            set { IsCasheTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
 
         public bool Checkbox4
         {
-            get { return RAM; }
-            set { RAM = value; OnPropertyChangedCheckbox(); }
+            get { return IsRAMTestEnabled; }
+            set { IsRAMTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
 
         public bool Checkbox5
         {
-            get { return Disk; }
-            set { Disk = value; OnPropertyChangedCheckbox(); }
+            get { return IsDiskTestEnabled; }
+            set { IsDiskTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
         public bool Checkbox6
         {
-            get { return GPU; }
-            set { GPU = value; OnPropertyChangedCheckbox(); }
+            get { return IsGPUTestEnabled; }
+            set { IsGPUTestEnabled = value; OnPropertyChangedCheckbox(); }
         }
         public event PropertyChangedEventHandler PropertyChangedCheckbox;
 
@@ -87,6 +81,7 @@ namespace Kursak.ViewModel
         }
         public SSTViewModel()
         {
+            _computerInfoService = new ComputerInfoService();
             _stressTestService = new StressTestService();
             StartCommand = new RelayCommand(Start);
             StopCommand = new RelayCommand(Stop);
@@ -102,17 +97,19 @@ namespace Kursak.ViewModel
 
         public void Start()
         {
-            if (Checkbox1)
-            {
-                Global.IsStartCPU = true;
-                _stressTestService.CPUStressTest();
-            }
-            if (Checkbox2)
-            {
-                Global.IsStartFPU = true;
-                _stressTestService.FPUStressTest();
-            }
+            _stressTestService.RunHardwareTests(GetTestSettingsModel());
 
+
+            //if (Checkbox1)
+            //{
+            //    Global.IsStartCPU = true;
+            //    _stressTestService.CPUStressTest();
+            //}
+            //if (Checkbox2)
+            //{
+            //    Global.IsStartFPU = true;
+            //    _stressTestService.FPUStressTest();
+            //}
         }
         public void Stop()
         {
@@ -126,17 +123,17 @@ namespace Kursak.ViewModel
                 Global.IsStartFPU = false;
             }
 
-            }
-        private TestSettingsModel GetTestSettingsModel() 
+        }
+        private TestSettingsModel GetTestSettingsModel()
         {
             var model = new TestSettingsModel()
             {
-            IsCPUTestEnabled = this.IsCPUTestEnabled,
-            IsFPUTestEnabled = this.IsFPUTestEnabled,
-            IsCasheTestEnabled = this.IsCasheTestEnabled,
-            IsRAMTestEnabled = this.IsRAMTestEnabled,
-            IsDiskTestEnabled = this.IsDiskTestEnabled,
-            IsGPUTestEnabled = this.IsGPUTestEnabled
+                IsCPUTestEnabled = IsCPUTestEnabled,
+                IsFPUTestEnabled = IsFPUTestEnabled,
+                IsCasheTestEnabled = IsCasheTestEnabled,
+                IsRAMTestEnabled = IsRAMTestEnabled,
+                IsDiskTestEnabled = IsDiskTestEnabled,
+                IsGPUTestEnabled = IsGPUTestEnabled
             };
             return model;
         }

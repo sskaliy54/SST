@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Kursak.Help;
+using Kursak.Models;
 using OpenHardwareMonitor.Hardware;
 
 namespace Kursak.Service
@@ -11,7 +12,45 @@ namespace Kursak.Service
     {
         static volatile bool stopThreadsCPU = false;
         static volatile int totalCalculationsCPU = 0;
+
+        public async Task RunHardwareTests(TestSettingsModel testSettings)
+        {
+            if (testSettings.IsCPUTestEnabled)
+            {
+                CPUStressTest();
+            }
+
+            if (testSettings.IsFPUTestEnabled)
+            {
+                FPUStressTest();
+            }
+
+            if (testSettings.IsCasheTestEnabled)
+            {
+                CasheStressTest();
+            }
+
+            if (testSettings.IsGPUTestEnabled)
+            {
+                GPUStressTest();
+            }
+
+            if (testSettings.IsDiskTestEnabled)
+            {
+                DiskStressTest();
+            }
+
+            if (testSettings.IsRAMTestEnabled)
+            {
+                RAMStressTest();
+            }
+        }
+
+
         //CPU
+
+
+
         public void CPUStressTest()
         {
             static void Main()
