@@ -1,0 +1,394 @@
+﻿<Window x:Class="Kursak.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kursak.ViewModel"
+        mc:Ignorable="d"
+        Height="450" Width="800"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+
+    <Window.DataContext>
+        <local:SSTViewModel />
+
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+
+    <Border Background="#E6E6FA"
+            CornerRadius="20">
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <!--Емблемка тут-->
+                <Border Background="#F0F8FF" CornerRadius="20,0,0,20" Margin="0,0,10,0" Grid.RowSpan="2" >
+                </Border>
+                <Grid>
+                    <StackPanel>
+                        <Image Width="55"
+                   Height="50" 
+                   Source="/Image/SST.png" Margin="8,10,138,15" Stretch="Fill"/>
+
+                    </StackPanel>
+
+                    <TextBlock Text="SST"
+                           FontFamily="Consolas"
+                           FontWeight="Bold"
+                           Foreground="#4B0082"
+                           FontSize="48"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Width="124" Margin="76,10,0,0" Height="61" />
+                </Grid>
+                <!--Кнопки-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="48" Background="Transparent"  Margin="0,20,0,0">
+                            <StackPanel Orientation="Horizontal" Width="178">
+                                <Image Source="/Image/home.png" Width="30" Height="30" Margin="5"/>
+                                <TextBlock Text="HOME" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" Height="19" Width="51"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                            <StackPanel Orientation="Horizontal" Width="178">
+                                <Image Source="/Image/graf.png" Width="30" Height="30" Margin="5"/>
+                                <TextBlock Text="GRAPHS" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" Height="26"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                            <StackPanel Orientation="Horizontal" Width="178">
+                                <Image Source="/Image/stat.png" Width="30" Height="30" Margin="5"/>
+                                <TextBlock Text="STATISTICS"
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                            <StackPanel Orientation="Horizontal" Width="178">
+                                <Image Source="/Image/save.png" Width="30" Height="30" Margin="5"/>
+                                <TextBlock Text="SAVE" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent" Width="201"  Click="HelpButton_Click">
+                            <StackPanel Orientation="Horizontal" Width="178">
+                                <Image Source="/Image/sup.png" Width="30" Height="30" Margin="5"/>
+                                <TextBlock Text="HELP" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel >
+                    <!--Кнопки-->
+                </Grid>
+
+                <!--центр-->
+
+            </Grid>
+            <Grid Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="55" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="510" />
+                        <ColumnDefinition Width="90" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="X"
+                        Style="{StaticResource RoundButtonTemplate}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Height="40"
+                        Width="40"
+                        Background="#DDA0DD"
+                        BorderBrush="#9370DB"
+                        Foreground="#4B0082"
+                        FontFamily="Consolas"
+                        FontSize="30" RenderTransformOrigin="1.9,1.075"
+                        Click="Button_Click" Grid.ColumnSpan="2" Margin="535,0,0,0"/>
+                    <!--x-->
+                </Grid>
+                <Grid Grid.Row="1" >
+                    <!--Visibility="{Binding IsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}"-->
+                    <!--Контент-->
+                    <Rectangle Fill="#F0FFFF"
+                        RadiusX="20"
+                        RadiusY="20"
+                        Margin="4,14,19,7" RenderTransformOrigin="0.5,0.5" >
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleY="0.26"/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="0.495"/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <!--Контент-->
+                    <Grid Grid.Row="1" >
+                        <Rectangle Fill="#F5F5F5"
+                RadiusX="20"
+                RadiusY="10"
+                Margin="260,58,58,39" RenderTransformOrigin="0.544,0.49" >
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.26"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.548"/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                        <TextBlock Text="Date &amp; Time"
+                FontFamily="Consolas"
+                FontWeight="Bold"
+                Foreground="#9370DB"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="300,62,0,0" Width="110" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="0.845,0.627" />
+                        <TextBlock Text="Status"
+                FontFamily="Consolas"
+                FontWeight="Bold"
+                Foreground="#9370DB"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="450,62,0,0" Width="70" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="0.204,0.627" />
+                        <Line X1="0" Y1="0" X2="0" Y2="250" Stroke="#4B0082" StrokeThickness="2" Margin="420,62,115,38" RenderTransformOrigin="0.5,0.5" >
+                            <Line.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Line.RenderTransform>
+                        </Line>
+                        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  x:Name="StartListBox" FontFamily="Consolas"  Foreground="#4B0082" FontWeight="Bold" Margin="273,86,187,45" Background="{x:Null}" BorderBrush="{x:Null}" />
+                        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  x:Name="StatusListBox" FontFamily="Consolas"  Foreground="#4B0082"  FontWeight="Bold" Margin="418,86,62,45" Background="{x:Null}" BorderBrush="{x:Null}" />
+
+                        <TextBlock Text="Testing details:"
+                FontFamily="Consolas"
+                FontWeight="Bold"
+                Foreground="#4B0082"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="338,31,0,0" Width="198" Grid.Column="1" Grid.Row="1" />
+
+                        <TextBlock Text="Select the test type:"
+                           FontFamily="Consolas"
+                           FontWeight="Bold"
+                           Foreground="#4B0082"
+                           FontSize="16"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Margin="29,31,0,0" Width="198" Grid.Column="1" Grid.Row="1" />
+
+                        <Rectangle Fill="#F5F5F5"
+                   RadiusX="10"
+                   RadiusY="10"
+                   Margin="22,59,370,40" RenderTransformOrigin="0.5,0.5" >
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.26"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.495"/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Margin="32,99,0,0" Height="166" Width="179" >
+                            <StackPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-0.169"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </StackPanel.RenderTransform>
+                            <CheckBox x:Name="CPU" Content="Stress CPU"
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082"
+                              IsChecked="{Binding Checkbox1, Mode=TwoWay}" />
+                            <CheckBox x:Name="FPU" Content="Stress FPU" 
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082"
+                              IsChecked="{Binding Checkbox2, Mode=TwoWay}" />
+                            <CheckBox x:Name="Cashe" Content="Stress cache"
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082" 
+                              IsChecked="{Binding Checkbox3, Mode=TwoWay}" />
+                            <CheckBox x:Name="RAM" Content="Stress system memory"
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082" 
+                              IsChecked="{Binding Checkbox4, Mode=TwoWay}" />
+                            <CheckBox x:Name="Disk" Content="Stress local disk" 
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082"
+                              IsChecked="{Binding Checkbox5, Mode=TwoWay}" Height="16" />
+                            <CheckBox x:Name="GPU" Content="Stress GPU(s)"
+                              Margin="0,0,0,10" 
+                              FontSize="14"
+                              FontFamily="Consolas"
+                              FontWeight="Bold"
+                              Foreground="#9370DB"
+                              Background="White"
+                              BorderBrush="#4B0082"
+                              IsChecked="{Binding Checkbox5, Mode=TwoWay}" Height="19" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"  Visibility="{Binding IsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ScrollViewer.Resources>
+                            <Style TargetType="RichTextBox">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="#4B0082" />
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontFamily" Value="Consolas" />
+                                <Setter Property="BorderThickness" Value="0" />
+                            </Style>
+                        </ScrollViewer.Resources>
+                        <RichTextBox Height="278" Width="522" >
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Span FontWeight="Bold" FontFamily="Consolas" Foreground="#4B0082" FontSize="20" >Дорогий користувачу , тебе радо вітає SST!</Span>
+                                </Paragraph>
+                                <Paragraph>
+                                    SST - це утиліта, яка допоможе перевірити стабільність системи  пристрою та виявити можливі проблеми з апаратним забезпеченням. Тестування різних компонентів системи , а також збір інформації про них (температуру , напругу , потужність і тд.) дозволить провести аналіз щодо роботи вашого комп’ютера.
+                                </Paragraph>
+                                <Paragraph>
+                                    <Span FontWeight="Bold" >Основні доступні функціх SST:</Span>
+                                </Paragraph>
+                                <Paragraph>
+                                    <Span>• Stress CPU - це процес перевірки стабільності центрального процесора (CPU) комп’ютера під високими навантаженнями. Після завершення тесту, користувач може переглянути результати, які дозволяють визначити, наскільки добре процесор справляється зі своєю роботою під високим навантаженням та допомогти виявити проблеми з процесором, такі як перевантаження, падіння продуктивності або проблеми з охолодженням.</Span>
+                                    <LineBreak/>
+                                    <Span>• Stress cache - це тест в програмі, який перевіряє ефективність кеш-пам'яті процесора, а саме швидкість доступу до неї. Результати тестування дають змогу оцінити, наскільки ефективно працює кеш-пам'ять, і як вона впливає на швидкодію процесора.</Span>
+                                    <LineBreak/>
+                                    <Span>• Stress system memory - це тест, який дозволяє перевірити стабільність роботи оперативної пам'яті комп'ютера під великим навантаженням. Результат тестування Stress system memory дозволяє оцінити стабільність роботи оперативної пам'яті (RAM) та її ефективність під час виконання великої кількості операцій з пам'яттю.</Span>
+                                    <LineBreak/>
+                                    <Span>• Stress local disk є тестом, який дозволяє перевірити стабільність роботи локального диску комп'ютера під великим навантаженням. Результат тестування Stress local disk дозволяє оцінити стан локального диску комп'ютера та виявити можливі проблеми з його роботою.</Span>
+                                    <LineBreak/>
+                                    <Span>• Stress GPU(s) - це тест, який дозволяє перевірити стійкість роботи графічного процесора (GPU) комп'ютера з ОС Windows. Результати тестування дозволяють оцінити стійкість роботи графічного процесора та виявити можливі проблеми з ним, такі як підвищена температура або недостатній рівень продуктивності.</Span>
+                                </Paragraph>
+                                <Paragraph>
+                                    Усі отримані результати ви можете переглянути на вкладці "Statistic", де детально представлені максимальні, мінімальні та поточні значення показників системи  у вигляді зручної таблиці. На вкладці “Graphs” усі отримані дані можна буде переглянути у вигляді діаграм.
+                                    <LineBreak/>
+                                    <LineBreak/>
+                                    Перш ніж розпочати тестування, будь ласка, забезпечте належне охолодження вашої системи та збережіть усі важливі дані, оскільки тести можуть використовувати значну частину ресурсів вашого комп'ютера.
+                                    <LineBreak/>
+                                    <LineBreak/>
+                                    Зверніть увагу, що користування програмою SST вимагає деяких технічних знань та розуміння. Будьте обережні під час використання цього інструменту .
+                                    <LineBreak/>
+                                    <LineBreak/>
+                                    <Span FontStyle="Italic">Якщо у вас виникли питання або проблеми під час використання SST будь ласка, зверніться до нашої служби підтримки за додатковою допомогою ( https://t.me/sskaliy54).</Span>
+                                </Paragraph>
+                                <Paragraph>
+                                    <Span FontWeight="Bold">Дякуємо, що використовуєте SST! Ми сподіваємося, що цей інструмент допоможе вам забезпечити стабільність та надійність вашої системи!</Span>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Button HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="28,7,0,0"
+                        Style="{StaticResource RoundButtonTemplate}"
+                        Width="80"
+                        Height="30"
+                        Background="#DDA0DD"
+                        BorderBrush="#9370DB"
+                        Content="Start" 
+                        Foreground="#4B0082"
+                        FontFamily="Consolas"
+                        FontSize="16"
+                        Command="{Binding StartCommand}" Click="ShowDateTime" />
+
+                    <Button HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="152,0,0,18"
+                    Style="{StaticResource RoundButtonTemplate}"
+                    Width="80"
+                    Height="30"
+                    Background="#DDA0DD"
+                    BorderBrush="#9370DB"
+                    Content="Stop" 
+                    Foreground="#4B0082"
+                    FontFamily="Consolas"
+                    FontSize="16"
+                    Command="{Binding StopCommand}" RenderTransformOrigin="0.486,0.567" Click="StopTimer" />
+
+                    <Button HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="326,0,0,18"
+                Style="{StaticResource RoundButtonTemplate}"
+                Width="174"
+                Height="30"
+                Background="#DDA0DD"
+                BorderBrush="#9370DB"
+                Content="Clear" 
+                Foreground="#4B0082"
+                FontFamily="Consolas"
+                FontSize="16"
+                Command="{Binding ABCCommand}" RenderTransformOrigin="0.486,0.567" Click="ClearButton_Click"  />
+                </Grid>
+            </Grid>
+        </Grid>
+
+    </Border>
+</Window>

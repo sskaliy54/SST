@@ -1,0 +1,140 @@
+﻿<Window x:Class="Kursak.View.Graphs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kursak.View"
+        mc:Ignorable="d"
+        Height="450" Width="800"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+
+
+
+    <Border Background="#E6E6FA"
+            CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+
+
+            <!-- Бокова панель з кнопками -->
+            <Rectangle Fill="#F5FFFA"
+                RadiusX="20"
+                RadiusY="20"
+                Margin="8,70,23,20" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.26"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.495"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+
+
+            <!-- Бокова панель з кнопками -->
+            <Border Background="#F0F8FF" CornerRadius="20,0,0,20" Margin="0,0,10,0" Grid.RowSpan="2">
+                <!-- Вміст прямокутника -->
+            </Border>
+
+            <StackPanel Grid.Column="0" Grid.RowSpan="2" Background="Transparent">
+                <Button Style="{StaticResource RoundButtonTemplate}" Height="48" Background="Transparent"  Margin="0,90,0,0">
+                    <StackPanel Orientation="Horizontal" Width="178">
+                        <Image Source="/Image/home.png" Width="30" Height="30" Margin="5"/>
+                        <TextBlock Text="HOME" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" Height="19" Width="51"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" Width="178">
+                        <Image Source="/Image/graf.png" Width="30" Height="30" Margin="5"/>
+                        <TextBlock Text="GRAPHS" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" Height="26"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" Width="178">
+                        <Image Source="/Image/stat.png" Width="30" Height="30" Margin="5"/>
+                        <TextBlock Text="STATISTICS"
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" Width="178">
+                        <Image Source="/Image/save.png" Width="30" Height="30" Margin="5"/>
+                        <TextBlock Text="SAVE" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundButtonTemplate}" Height="50" Background="Transparent" Width="201">
+                    <StackPanel Orientation="Horizontal" Width="178">
+                        <Image Source="/Image/sup.png" Width="30" Height="30" Margin="5"/>
+                        <TextBlock Text="HELP" 
+                                   Foreground="#4B0082"
+                                   FontFamily="Consolas"
+                                   FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+            <StackPanel>
+                <Image Width="55"
+                   Height="50" 
+                   Source="/Image/SST.png" Margin="8,10,138,15" Stretch="Fill"/>
+
+            </StackPanel>
+
+            <TextBlock Text="SST"
+                           FontFamily="Consolas"
+                           FontWeight="Bold"
+                           Foreground="#4B0082"
+                           FontSize="48"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Width="124" Margin="76,10,0,0" Height="61" />
+
+
+            <Button Content="X"
+                        Style="{StaticResource RoundButtonTemplate}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Margin="550,0,0,0"
+                        Height="40"
+                        Width="40"
+                        Background="#DDA0DD"
+                        BorderBrush="#9370DB"
+                        Foreground="#4B0082"
+                        FontFamily="Consolas"
+                        FontSize="30" RenderTransformOrigin="1.9,1.075" Grid.Column="1"
+                        Click="Button_Click"/>
+            <TextBlock Text="GRAPHS"
+                FontFamily="Consolas"
+                FontWeight="Bold"
+                Foreground="#9370DB"
+                FontSize="48"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" Width="160" Margin="0,13,0,0" Height="61" Grid.Column="1" RenderTransformOrigin="0.707,0.558" />
+        </Grid>
+    </Border>
+</Window>
