@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,15 +15,23 @@ namespace Kursak.Service
     public class ComputerInfoService: IDisposable
     {
         private ComputerInfoModel _computerInfoModel;
-        Computer _computer = new Computer();
-
+        Computer _computer = new Computer() {
+            CPUEnabled = true,
+            RAMEnabled = true,
+            GPUEnabled = true,
+            FanControllerEnabled = true,
+            HDDEnabled = true,
+            MainboardEnabled = true
+        };
+        UpdateVisitor updateVisitor = new UpdateVisitor();
 
 
         public ComputerInfoService()
         {
             _computerInfoModel = new ComputerInfoModel();
-            _computer.CPUEnabled = true;
+
             _computer.Open();
+             _computer.GetReport();
             Task.Run(async()=>await GetComputerInfoAsync());
         }
 
@@ -45,8 +54,8 @@ namespace Kursak.Service
                 case ComputerInfoType.Usage:
                     return MappingHelper.MapToPlotingModels(_computerInfoModel.Usage);
 
-                //case ComputerInfoType.Voltage:
-                //    return MappingHelper.MapToPlotingModels(_computerInfoModel.Voltages);
+                case ComputerInfoType.Voltage:
+                    return MappingHelper.MapToPlotingModels(_computerInfoModel.Voltages);
 
                 default:
                     throw new ArgumentException("Invalid ComputerInfoType value");
@@ -56,6 +65,7 @@ namespace Kursak.Service
 
         public async Task GetComputerInfoAsync()
         {
+            _computer.Accept(updateVisitor);
             while (true)
             {
                
@@ -63,15 +73,20 @@ namespace Kursak.Service
                 foreach (var hardware in _computer.Hardware)
                 {
                     hardware.Update();
+                   
+                    foreach(var sensor in hardware.SubHardware)
+                    {
+                        sensor.Update();
+                    }
 
                     // Check if the hardware component represents a CPU
                     if (hardware.HardwareType == HardwareType.CPU)
                     {
                         // Retrieve the clock-related sensors
-                        var minClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock && s.Name == "Min");
-                        var maxClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock && s.Name == "Max");
-                        var averageClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock && s.Name == "Average");
-                        var currentClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock && s.Name == "Clock");
+                        var minClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock);
+                        var maxClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock);
+                        var averageClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock);
+                        var currentClocksSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Clock);
 
                         // Create a new ClocksModel object
                         ClocksModel clocksData = new ClocksModel();
@@ -90,10 +105,10 @@ namespace Kursak.Service
 
 
                         // Retrieve the temperature sensors
-                        var minTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature && s.Name == "Min");
-                        var maxTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature && s.Name == "Max");
-                        var averageTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature && s.Name == "Average");
-                        var currentTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature && s.Name == "Temperature");
+                        var minTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
+                        var maxTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
+                        var averageTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
+                        var currentTempSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
 
                         // Create a new TemperatureModel object
                         TemperatureModel tempData = new TemperatureModel();
@@ -111,10 +126,10 @@ namespace Kursak.Service
                         _computerInfoModel.Temperatures.Add(tempData);
 
                         // Retrieve the power-related sensors
-                        var minPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power && s.Name == "Min");
-                        var maxPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power && s.Name == "Max");
-                        var averagePowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power && s.Name == "Average");
-                        var currentPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power && s.Name == "Power");
+                        var minPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power);
+                        var maxPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power);
+                        var averagePowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power);
+                        var currentPowerSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Power);
 
                         // Create a new PowerModel object
                         PowerModel powerData = new PowerModel();
@@ -132,10 +147,10 @@ namespace Kursak.Service
                         _computerInfoModel.Powers.Add(powerData);
 
                         // Retrieve the fan-related sensors
-                        var minFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan && s.Name == "Min");
-                        var maxFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan && s.Name == "Max");
-                        var averageFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan && s.Name == "Average");
-                        var currentFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan && s.Name == "Fan");
+                        var minFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan);
+                        var maxFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan);
+                        var averageFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan);
+                        var currentFanSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Fan);
 
                         // Create a new CoolingsFansModel object
                         CoolingsFansModel fanData = new CoolingsFansModel();
@@ -153,10 +168,10 @@ namespace Kursak.Service
                         _computerInfoModel.CoolFan.Add(fanData);
 
                         // Retrieve the usage-related sensors
-                        var minUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load && s.Name == "Min");
-                        var maxUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load && s.Name == "Max");
-                        var averageUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load && s.Name == "Average");
-                        var currentUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load && s.Name == "Load");
+                        var minUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load );
+                        var maxUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load );
+                        var averageUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load);
+                        var currentUsageSensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load);
 
                         // Create a new UsageModel object
                         UsageModel usageData = new UsageModel();
@@ -176,9 +191,17 @@ namespace Kursak.Service
                     }
                 }
 
-                await Task.Delay(5000);
+                OnPropertyChanged(nameof(_computerInfoModel));
+                await Task.Delay(3000);
             }
 
+        }
+
+        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void Dispose()

@@ -1,13 +1,18 @@
-﻿using Kursak.Help;
+﻿using GalaSoft.MvvmLight.Command;
+using Kursak.Help;
 using Kursak.Models;
 using Kursak.Service;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using OxyPlot.Wpf;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -93,6 +98,66 @@ namespace Kursak.ViewModel
             GraphsButtonCommand = new RelayCommand(ExecuteGraphsButton);
             HomeButtonCommand = new RelayCommand(ExecuteHomeButton);
             HelpButtonCommand = new RelayCommand(ExecuteHelpButton);
+            ChangeComputerInfoTypeCommand = new RelayCommand<ComputerInfoType>(ChangeComputerInfoType);
+            PlotModel = new PlotModel();
+           
+            // Create axes
+            var xAxis = new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+
+                MinorIntervalType = DateTimeIntervalType.Milliseconds,
+                IntervalType = DateTimeIntervalType.Minutes,
+                Minimum = DateTimeAxis.ToDouble(DateTime.Now),
+                Maximum = DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(3)),
+                AxisDistance = 2,
+                StringFormat = "mm:ss",
+                Title = "Time",
+
+            };
+            PlotModel.Axes.Add(xAxis);
+
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Value",
+                Minimum = 0,
+                Maximum = 100,
+               
+            };
+            PlotModel.Axes.Add(yAxis);
+            //_computerInfoService.PropertyChanged += (sender, args) =>
+            //{
+            //    PlotInfo(SelectedComputerInfoType);
+            //};
+
+            // Set up the timer
+            timer = new Timer { Interval = 1000 }; // Refresh every second
+            timer.Elapsed += Timer_Tick;
+            timer.Start();
+        }
+   
+
+        private ComputerInfoType selectedComputerInfoType;
+        public ComputerInfoType SelectedComputerInfoType
+        {
+            get { return selectedComputerInfoType; }
+            set
+            {
+                if (selectedComputerInfoType != value)
+                {
+                    selectedComputerInfoType = value;
+                    OnPropertyChanged(nameof(SelectedComputerInfoType));
+                }
+            }
+        }
+        public ICommand ChangeComputerInfoTypeCommand { get; }
+
+        public void ChangeComputerInfoType(ComputerInfoType newType)
+        {
+            SelectedComputerInfoType = newType;
+            PlotInfo(newType);
+
         }
 
         private PlotModel _plotModel;
@@ -107,45 +172,41 @@ namespace Kursak.ViewModel
             }
         }
 
-        public void PlotInfo()
+
+        private Timer timer;
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            PlotInfo(SelectedComputerInfoType);
+            // Redraw the plot
+            
+        }
+
+
+        public void PlotInfo(ComputerInfoType infoType)
         {
             // Create the PlotModel
-            PlotModel = new PlotModel();
 
-            // Create axes
-            var xAxis = new DateTimeAxis
-            {
-                Position = AxisPosition.Bottom,
-                StringFormat = "HH:mm:ss",
-                Title = "Time"
-            };
-            PlotModel.Axes.Add(xAxis);
-
-            var yAxis = new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                Title = "Value"
-            };
-            PlotModel.Axes.Add(yAxis);
-
-            // Create a line series
+            PlotModel.Series.Clear();
             var lineSeries = new LineSeries
             {
                 Title = "Data",
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 4
+                MarkerSize = 4,
+            
             };
 
             // Add data points to the series
-            var data = _computerInfoService.GetPlotInfo(ComputerInfoType.Clock);
+            var data = _computerInfoService.GetPlotInfo(infoType);
+            data.OrderBy(x => x.CollectedTime);
             foreach (var item in data)
             {
-                var dataPoint = new DataPoint(DateTimeAxis.ToDouble(item.CollectedTime), item.Current);
+                var dataPoint = DateTimeAxis.CreateDataPoint(item.CollectedTime, item.Current);
                 lineSeries.Points.Add(dataPoint);
             }
 
-            // Add the series to the plot model
+           
             PlotModel.Series.Add(lineSeries);
+            PlotModel.InvalidatePlot(true);
         }
 
 
@@ -159,9 +220,9 @@ namespace Kursak.ViewModel
         public bool IsGPUTestEnabled { get; set; }
 
 
-        public void Start()
+        public async void Start()
         {
-            _stressTestService.RunHardwareTests(GetTestSettingsModel());
+            Task.Run(async () => await _stressTestService.RunHardwareTests(GetTestSettingsModel()));
 
 
             //if (Checkbox1)
@@ -265,7 +326,7 @@ namespace Kursak.ViewModel
             Grid1Visibility = Visibility.Collapsed;
             Grid2Visibility = Visibility.Visible;
             StackPanelVisibility = Visibility.Collapsed;
-            PlotInfo();
+            
         }
 
         private void ExecuteHomeButton()
@@ -294,32 +355,32 @@ namespace Kursak.ViewModel
     }
 
 
-    public class RelayCommand : ICommand
-    {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
+    //public class RelayCommand : ICommand
+    //{
+    //    private readonly Action _execute;
+    //    private readonly Func<bool> _canExecute;
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+    //    public event EventHandler CanExecuteChanged
+    //    {
+    //        add { CommandManager.RequerySuggested += value; }
+    //        remove { CommandManager.RequerySuggested -= value; }
+    //    }
 
-        public RelayCommand(Action execute, Func<bool> canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
+    //    public RelayCommand(Action execute, Func<bool> canExecute = null)
+    //    {
+    //        _execute = execute;
+    //        _canExecute = canExecute;
+    //    }
 
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || _canExecute();
-        }
+    //    public bool CanExecute(object parameter)
+    //    {
+    //        return _canExecute == null || _canExecute();
+    //    }
 
-        public void Execute(object parameter)
-        {
-            _execute?.Invoke();
-        }
-    }
+    //    public void Execute(object parameter)
+    //    {
+    //        _execute?.Invoke();
+    //    }
+    //}
 
 }

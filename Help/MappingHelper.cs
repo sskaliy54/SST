@@ -19,6 +19,7 @@ namespace Kursak.Help
                 Average = temperatureModel.AverageTemperature,
                 Current = temperatureModel.CurrentTemperature,
                 CollectedTime = temperatureModel.CollectedTime
+                
             };
         }
 
@@ -42,6 +43,18 @@ namespace Kursak.Help
                 Max = powerModel.MaxPower,
                 Average = powerModel.AveragePower,
                 Current = powerModel.CurrentPower,
+                CollectedTime = powerModel.CollectedTime
+            };
+        }
+
+        public static PlotingModel MapToPlotingModel(VoltageModel powerModel)
+        {
+            return new PlotingModel
+            {
+                Min = powerModel.MinVoltage,
+                Max = powerModel.MaxVoltage,
+                Average = powerModel.AverageVoltage,
+                Current = powerModel.CurrentVoltage,
                 CollectedTime = powerModel.CollectedTime
             };
         }
@@ -90,6 +103,11 @@ namespace Kursak.Help
         }
 
         public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<UsageModel> usageModels)
+        {
+            return usageModels.Select(MapToPlotingModel).ToList();
+        }
+
+        public static List<PlotingModel> MapToPlotingModels(ConcurrentBag<VoltageModel> usageModels)
         {
             return usageModels.Select(MapToPlotingModel).ToList();
         }

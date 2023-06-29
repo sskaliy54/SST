@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursak.ViewModel"
+        xmlns:model="clr-namespace:Kursak.Models"
         xmlns:oxy="http://oxyplot.org/wpf"
         
 
@@ -18,7 +19,7 @@
 
     <Window.DataContext>
         <local:SSTViewModel />
-
+       
     </Window.DataContext>
 
     <Window.Resources>
@@ -361,9 +362,21 @@
 
 
                 <Grid Grid.Row="1" Name="Grid2" Visibility="{Binding Grid2Visibility}">
-                    <oxy:PlotView Model="{Binding PlotModel}" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Button Content="Clock" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Clock}" />
+                        <Button Content="Cooling" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Cooling}" />
+                        <Button Content="Power" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Power}" />
+                        <Button Content="Temperature" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Temperature}" />
+                        <Button Content="Usage" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Usage}" />
+                        <Button Content="Voltage" Command="{Binding ChangeComputerInfoTypeCommand}" CommandParameter="{x:Static model:ComputerInfoType.Voltage}" />
+                    </StackPanel>
+                    <oxy:PlotView Model="{Binding PlotModel}" Grid.Row="1" />
                 </Grid>
-                
+
                 <Grid Grid.Row="2">
                     <Button HorizontalAlignment="Left"
                         VerticalAlignment="Top"
