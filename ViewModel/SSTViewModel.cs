@@ -20,6 +20,8 @@ namespace Kursak.ViewModel
         private bool GPU;
         private bool Disk;
         private bool RAM;
+        private bool RAM2;
+        
         public bool Checkbox1
         {
             get { return CPU; }
