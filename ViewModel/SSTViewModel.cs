@@ -1,6 +1,9 @@
 ﻿using Kursak.Help;
 using Kursak.Models;
 using Kursak.Service;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -79,6 +82,7 @@ namespace Kursak.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public SSTViewModel()
         {
             _computerInfoService = new ComputerInfoService();
@@ -86,6 +90,62 @@ namespace Kursak.ViewModel
             StartCommand = new RelayCommand(Start);
             StopCommand = new RelayCommand(Stop);
         }
+
+        private PlotModel _plotModel;
+
+        public PlotModel PlotModel
+        {
+            get { return _plotModel; }
+            set
+            {
+                _plotModel = value;
+                OnPropertyChanged(nameof(PlotModel));
+            }
+        }
+
+        public void AA()
+        {
+            // Create the PlotModel
+            PlotModel = new PlotModel();
+
+            // Create axes
+            var xAxis = new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "HH:mm:ss",
+                Title = "Time"
+            };
+            PlotModel.Axes.Add(xAxis);
+
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Value"
+            };
+            PlotModel.Axes.Add(yAxis);
+
+            // Create a line series
+            var lineSeries = new LineSeries
+            {
+                Title = "Data",
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 4
+            };
+
+            // Add data points to the series
+            var data = _computerInfoService.GetPlotInfo(ComputerInfoType.Clock);
+            foreach (var item in data)
+            {
+                var dataPoint = new DataPoint(DateTimeAxis.ToDouble(item.CollectedTime), item.Current);
+                lineSeries.Points.Add(dataPoint);
+            }
+
+            // Add the series to the plot model
+            PlotModel.Series.Add(lineSeries);
+        }
+
+
+
 
         public bool IsCPUTestEnabled { get; set; }
         public bool IsFPUTestEnabled { get; set; }

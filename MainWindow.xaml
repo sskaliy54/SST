@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursak.ViewModel"
         xmlns:oxy="http://oxyplot.org/wpf"
+        
 
         mc:Ignorable="d"
         Height="450" Width="800"
@@ -365,6 +366,10 @@
 
                 </Grid>
 
+                <Grid Grid.Row="1">
+                    <oxy:PlotView Model="{Binding PlotModel}" />
+                </Grid>
+                
                 <Grid Grid.Row="2">
                     <Button HorizontalAlignment="Left"
                         VerticalAlignment="Top"
