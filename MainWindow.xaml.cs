@@ -95,5 +95,17 @@ namespace Kursak
                 viewModel.IsGridVisible = !viewModel.IsGridVisible;
             }
         }
+        private void rollup_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void MouseDownWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

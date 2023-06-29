@@ -122,6 +122,22 @@ namespace Kursak.ViewModel
             {
                 Global.IsStartFPU = false;
             }
+            if (Checkbox3)
+            {
+                Global.IsStartCashe = false;
+            }
+            if (Checkbox4)
+            {
+                Global.IsStartRAM = false;
+            }
+            if (Checkbox5)
+            {
+                Global.IsStartDisk = false;
+            }
+            if (Checkbox6)
+            {
+                Global.IsStartGPU = false;
+            }
 
         }
         private TestSettingsModel GetTestSettingsModel()

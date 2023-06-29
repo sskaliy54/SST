@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursak.ViewModel"
+        xmlns:oxy="http://oxyplot.org/wpf"
+
         mc:Ignorable="d"
         Height="450" Width="800"
         WindowStyle = "None"
@@ -24,7 +26,7 @@
 
 
     <Border Background="#E6E6FA"
-            CornerRadius="20">
+            CornerRadius="20" MouseDown="MouseDownWindow">
         <Grid>
 
             <Grid.ColumnDefinitions>
@@ -121,8 +123,8 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="510" />
-                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="450" />
+                        <ColumnDefinition Width="150" />
                     </Grid.ColumnDefinitions>
                     <Button Content="X"
                         Style="{StaticResource RoundButtonTemplate}"
@@ -136,6 +138,18 @@
                         FontFamily="Consolas"
                         FontSize="30" RenderTransformOrigin="1.9,1.075"
                         Click="Button_Click" Grid.ColumnSpan="2" Margin="535,0,0,0"/>
+                    <Button x:Name="rollup" Content="-"
+                        Style="{StaticResource RoundButtonTemplate}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Height="40"
+                        Width="40"
+                        Background="#DDA0DD"
+                        BorderBrush="#9370DB"
+                        Foreground="#4B0082"
+                        FontFamily="Consolas"
+                        FontSize="30" RenderTransformOrigin="1.9,1.075"
+                        Margin="480,0,0,0" Grid.ColumnSpan="2" Click="rollup_Click"/>
                     <!--x-->
                 </Grid>
                 <Grid Grid.Row="1" >
@@ -342,6 +356,13 @@
                             </FlowDocument>
                         </RichTextBox>
                     </ScrollViewer>
+
+                    <!--графік  <oxy:PlotView Model="{Binding MyModel}" Margin="22,46,43,45"/>
+-->
+
+
+
+
                 </Grid>
 
                 <Grid Grid.Row="2">

@@ -10,6 +10,9 @@ namespace Kursak.Help
     {
         public static bool IsStartCPU;
         public static bool IsStartFPU;
-
+        public static bool IsStartCashe;
+        public static bool IsStartRAM;
+        public static bool IsStartGPU;
+        public static bool IsStartDisk;
     }
 }
